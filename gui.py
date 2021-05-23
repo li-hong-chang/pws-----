@@ -33,21 +33,31 @@ class Action(tk.Frame):
         self.teacher_label = tk.Label(self, text="課程:", height=1, width=5, bg='white', font=f2).place(x=100, y=200)
         self.num_label = tk.Label(self, text="資料數量:", height=1, width=10, bg='white', font=f2).place(x=17, y=270)
         # 輸入
-        self.teacher =  tk.Entry(self, textvariable=tk.StringVar(), bg='pink', font=f3).place(x=200, y=135)
-        self.course =  tk.Entry(self, textvariable=tk.StringVar(), bg='pink', font=f3).place(x=200, y=205)
-        self.num = ttk.Combobox(self, state="readonly").place(x=200, y=270)
-        self.num['values'] = ["1", "2", "3", "4", '5', '6']
-        self.arrange = ttk.Combobox(self, values=["年度", "留言數"], font=f3, state="readonly").place(x=200, y=340)
+        self.teacher = tk.Entry(self, textvariable=tk.StringVar(), bg='pink', font=f3)
+        self.teacher.place(x=200, y=135)
+        self.course = tk.Entry(self, textvariable=tk.StringVar(), bg='pink', font=f3)
+        self.course.place(x=200, y=205)
+        self.num = ttk.Combobox(self, values=["1", "2", "3", "4", '5', '6'], font=f3, textvariable=tk.StringVar(), state="readonly")
+        self.num.place(x=200, y=270)
+        self.num.current(0)
+        self.arrange = ttk.Combobox(self, values=["年度", "留言數"], font=f3, state="readonly")
+        self.arrange.place(x=200, y=340)
+        self.arrange.current(0)
 
     def click(self):
         self.output.delete(1.0, "end")
         self.output.tag_config("tag_1", backgroun="yellow", foreground="red")
-        if self.num is None:
+        if self.num.get() is None:
             self.output.insert(1.0, '請選擇資料數量', "tag_1")
         elif self.arrange is None:
             self.output.insert(1.0, '請選擇排序方式', "tag_1")
+        elif self.teacher.get() == '':
+            self.output.insert(1.0, '請選輸入教師姓名', "tag_1")
+        elif self.course.get() == '':
+            self.output.insert(1.0, '請選輸入課堂名稱', "tag_1")
         else:
             self.output.insert(1.0, '載入中....\n', "tag_1")
+            self.output.insert(2.0, (self.teacher.get() + self.course.get()))
             self.output.insert(2.0, 'jojo\n') # 內文從頭插入
             self.output.insert(2.0, '666\n') # 內文從頭插入
             self.output.delete(1.0, 1.8)
