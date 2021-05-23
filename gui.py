@@ -26,9 +26,9 @@ class Action(tk.Frame):
         self.output.place(x=600, y=75)
         # 按鈕
         self.start = tk.Button(self, text="開始", height=1, width=4, bg='#ffcc00', font=f3, command=self.click).place(x=250, y=400)
-        self.intro = tk.Button(self, text="1.輸入教師名稱\n2.輸入課程名稱\n3.選擇排序和數量\n4.點擊開始", width=40, bg='orange', font=f4, state='disable').place(x=32, y=20)
+        self.intro = tk.Button(self, text="1.輸入教師名稱\n2.輸入課程名稱\n3.選擇資料數量和排序方式\n4.點擊開始", width=40, bg='orange', font=f4, state='disable').place(x=32, y=20)
         # 標題
-        self.concequence = tk.Label(self, text="結果:", height=1, width=5, bg='white', font=f2).place(x=590, y=25)  # 結果
+        self.consequence = tk.Label(self, text="結果:", height=1, width=5, bg='white', font=f2).place(x=590, y=25)  # 結果
         self.arrange_label = tk.Label(self, text="排序方式:", height=1, width=10, bg='white', font=f2).place(x=17, y=340)
         self.course_label = tk.Label(self, text="教師:", height=1, width=5, bg='white', font=f2).place(x=100, y=130)
         self.teacher_label = tk.Label(self, text="課程:", height=1, width=5, bg='white', font=f2).place(x=100, y=200)
