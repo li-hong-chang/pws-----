@@ -58,8 +58,8 @@ class Action(tk.Frame):
             self.output.insert(1.0, '請選輸入課堂名稱', "tag_1")
         else:
             self.output.insert(1.0, '載入中....\n', "tag_1")
-            self.output.insert(2.0, 'jojo\n') # 內文從頭插入
-            self.output.insert(2.0, '666\n') # 內文從頭插入
+            self.output.insert('end', 'jojo\n') # 內文從頭插入
+            self.output.insert('end', '666\n') # 內文從頭插入
             self.output.delete(1.0, 1.8)
             self.output.insert(1.0, '完成', "tag_1")
 
