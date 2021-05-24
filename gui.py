@@ -3,6 +3,72 @@ import tkinter.font as tkFont
 from functools import partial
 from tkinter import ttk
 
+a = ('哪一學年度修課：\n'
+'        108-1\n'
+
+'      ψ 授課教師 (若為多人合授請寫開課教師，以方便收錄)\n'
+'        蔡忠潤、陳世昕助教\n'
+
+'      λ 開課系所與授課對象 (是否為必修或通識課 / 內容是否與某些背景相關)\n'
+'        國企系、工管系、會計系、財金系、地理系 必修\n'
+
+'      δ 課程大概內容\n'
+'        積分(定積分、不定積分、分部積分、瑕積分......)\n'
+
+'      Ω 私心推薦指數(以五分計) ★★★★★\n'
+'        ★★★★★，老師笑起來超可愛又教得很清楚\n'
+'        助教更是超級用心！！(給助教的★加到爆)\n'
+'        不過俗話說的好，微積分三分靠老師，兩分靠天意，\n'
+'        剩下的還是要靠自己苦讀啊......\n'
+
+'      η 上課用書(影印講義或是指定教科書)\n'
+'        James Stewart, Calculus Early Transcendentals, 8th edition.\n'
+'        不過跟第7版基本上長的一模模一樣樣，\n'
+'        所以直接用上一版的電子檔上課準沒問題XD\n'
+
+'      μ 上課方式(投影片、團體討論、老師教學風格)\n'
+'        教授大多英文版書，中文授課，口條清晰，\n'
+'        但老師的手速真的快到爆炸......\n'
+'        板書絕對要快速抄下(不過可以趁老師在解釋算式時補上，所以也還行XD)\n'
+'        最重要的是教授人超可愛的！！！\n'
+'        每次在被微積分Ｋ個殘花敗柳的時候，\n'
+'        看著教授對著數學式子笑了笑就覺得好療癒(≧▽≦)/！！(敲碗)\n'
+
+'        而陳世昕助教也教得超好！\n'
+'        我每次在考前都和同學抱佛腳(真的建議大家不要把問題卡到最後TT)，\n'
+'        帶著一堆問題纏著助教，害助教不能好好吃飯快點回家，\n'
+'        但助教都很友善、教得又很仔細！\n'
+'        真的覺得是佛陀轉世啊~~~~\n'
+
+'        想當年108-2時，我修到兩個教得不太好的教授開的微積分3和4(有夠悲催)，\n'
+'        真的幸好有世昕助教幫忙撐起來><......！\n'
+'        所以本人認真覺得，遇到一個不好的教授絕對不要氣餒，\n'
+'        因為一個好的助教絕對是幫助你微積分pass的關鍵！\n'
+
+'        所以我大推陳世昕助教！\n'
+'        希望他之後可以快快升成教授，造福後代無數被微積分摧殘的子孫啊！！\n'
+
+'        (不過每次助教在的班級都不一定，建議大家到以下網址看看助教在哪上課唷：\n'
+'        http://www.math.ntu.edu.tw/~calc/cp_n_34652.html)\n'
+
+'      σ 評分方式(給分甜嗎？是紮實分？)\n'
+'        期考            50% (統一教學考試)\n'
+'        小考            20% 兩次(各班獨立)\n'
+'        紙本作業        20% 四次\n'
+'        WebWork         10%\n'
+
+'      ρ 考題型式、作業方式\n'
+'        請看微積分統一教學網唷~~\n'
+'        http://www.math.ntu.edu.tw/~calc/Default.html\n'
+
+'      ω 其它(是否注重出席率？如果為外系選修，需先有什麼基礎較好嗎？老師個性？\n'
+'              加簽習慣？嚴禁遲到等…)\n'
+'        不點名，但因為課程是環環相扣的，翹一節必死^^\n'
+
+'      Ψ 總結\n')
+
+
+
 class Action(tk.Frame):
     def __init__(self):
         tk.Frame.__init__(self)
@@ -48,18 +114,19 @@ class Action(tk.Frame):
     def click(self):  # 點擊程序
         self.output.delete(1.0, "end")  # 清空所有文字
         self.output.tag_config("tag_1", backgroun="yellow", foreground="red")  # 明顯的標示
+        self.output.tag_config("tag_2", backgroun="#9AFF02", foreground="mediumblue")
         if self.num.get() is None:
             self.output.insert(1.0, '請選擇資料數量', "tag_1")
         elif self.arrange.get() is None:
             self.output.insert(1.0, '請選擇排序方式', "tag_1")
-        elif self.teacher.get() == '':
-            self.output.insert(1.0, '請選輸入教師姓名', "tag_1")
-        elif self.course.get() == '':
-            self.output.insert(1.0, '請選輸入課堂名稱', "tag_1")
+        elif self.teacher.get().strip() == '':
+            self.output.insert(1.0, '請輸入教師姓名', "tag_1")
+        elif self.course.get().strip() == '':
+            self.output.insert(1.0, '請輸入課堂名稱', "tag_1")
         else:
             self.output.insert(1.0, '載入中....\n', "tag_1")
-            self.output.insert('end', 'jojo\n') # 內文從頭插入
-            self.output.insert('end', '666\n') # 內文從頭插入
+            self.output.insert('end', '666\n', 'tag_2')
+            self.output.insert('end', a) # 內文從頭插入
             self.output.delete(1.0, 1.8)
             self.output.insert(1.0, '完成', "tag_1")
 
