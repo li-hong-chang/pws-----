@@ -112,6 +112,7 @@ class Action(tk.Frame):
         self.arrange.current(0)
 
     def click(self):  # 點擊程序
+        self.output['state'] = 'normal'
         self.output.delete(1.0, "end")  # 清空所有文字
         self.output.tag_config("tag_1", backgroun="yellow", foreground="red")  # 明顯的標示
         self.output.tag_config("tag_2", backgroun="#9AFF02", foreground="mediumblue")
@@ -125,10 +126,11 @@ class Action(tk.Frame):
             self.output.insert(1.0, '請輸入課堂名稱', "tag_1")
         else:
             self.output.insert(1.0, '載入中....\n', "tag_1")
-            self.output.insert('end', '666\n', 'tag_2')
+            self.output.insert('end', self.course.get().strip() + self.teacher.get().strip() + '\n', 'tag_2')
             self.output.insert('end', a) # 內文從頭插入
             self.output.delete(1.0, 1.8)
             self.output.insert(1.0, '完成', "tag_1")
+            self.output['state'] = 'disable'
 
 
 if __name__ == "__main__":
