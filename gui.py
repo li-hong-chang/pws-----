@@ -116,11 +116,7 @@ class Action(tk.Frame):
         self.output.delete(1.0, "end")  # 清空所有文字
         self.output.tag_config("tag_1", backgroun="yellow", foreground="red")  # 明顯的標示
         self.output.tag_config("tag_2", backgroun="#9AFF02", foreground="mediumblue")
-        if self.num.get() is None:
-            self.output.insert(1.0, '請選擇資料數量', "tag_1")
-        elif self.arrange.get() is None:
-            self.output.insert(1.0, '請選擇排序方式', "tag_1")
-        elif self.teacher.get().strip() == '':
+        lf.teacher.get().strip() == '':
             self.output.insert(1.0, '請輸入教師姓名', "tag_1")
         elif self.course.get().strip() == '':
             self.output.insert(1.0, '請輸入課堂名稱', "tag_1")
