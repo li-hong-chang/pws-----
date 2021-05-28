@@ -122,7 +122,7 @@ class Action(tk.Frame):
             self.output.insert(1.0, '請輸入課堂名稱', "tag_1")
         else:
             self.output.insert(1.0, '載入中....\n', "tag_1")
-            self.output.insert('end', self.course.get().strip() + self.teacher.get().strip() + '\n', 'tag_2')
+            self.output.insert('end', self.teacher.get().strip()+' '+ self.course.get().strip() + '\n', 'tag_2')
             self.output.insert('end', a) # 內文從頭插入
             self.output.delete(1.0, 1.8)
             self.output.insert(1.0, '完成', "tag_1")
