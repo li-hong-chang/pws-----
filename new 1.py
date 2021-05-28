@@ -145,35 +145,7 @@ class Action(tk.Frame):
                     pt += float(s1.sentiments)
             w.close()
             grade = pt/num
-            
-            num = input('車號:')
 
-            folder_path = './Desktop/' + num + '/'
-            if (os.path.exists(folder_path) == False): #判斷資料夾是否存在
-                os.makedirs(folder_path) #Create folder
-
-            nhentai = 'https://nhentai.net/g/' + num + '/1/'
-            re = requests.get(nhentai)
-
-            while True:
-                try:
-                    n_soup = BeautifulSoup(re.text, 'html.parser')
-                    nhentai = n_soup.find('section', {'class', 'fit-both'})
-                    a = nhentai.find('img').get('src') # img url
-                    nhentai = nhentai.find('a')['href']
-                    html = requests.get(a)
-                    img_name = folder_path + a[a.rfind('/')+1:a.rfind('.')] + '.png'
-
-                    with open(img_name,'wb') as file: #以byte的形式將圖片數據寫入
-                        file.write(html.content)
-                        file.flush()
-                        print(img_name)
-                    file.close()
-
-                    re = requests.get('https://nhentai.net' +  nhentai)
-                except:
-                    print('完成')
-                    break
             self.output.insert('end', t) # 內文從頭插入
             self.output.delete(1.0, 1.8)
             if grade > 0.5:
