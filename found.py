@@ -12,7 +12,7 @@ article_href = []
 PTT_URL = "https://www.ptt.cc/bbs/NTUcourse/search?page="
 PTT_URL2="&q=[評價]"
 #PTT_test="https://www.ptt.cc/bbs/NTUcourse/search?q=%5B%E8%A9%95%E5%83%B9%5D"
-pages=int(input())
+pages=int(input())#有284頁
 for i in range(pages):
     m=i+1
     PTTCOURSE_URL=PTT_URL+str(m)+PTT_URL2
