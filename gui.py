@@ -76,6 +76,7 @@ class Action(tk.Frame):
         self.course_label = tk.Label(self, text="教師:", height=1, width=5, bg='white', font=f2).place(x=100, y=130)
         self.teacher_label = tk.Label(self, text="課程:", height=1, width=5, bg='white', font=f2).place(x=100, y=200)
         self.num_label = tk.Label(self, text="資料數量:", height=1, width=10, bg='white', font=f2).place(x=17, y=270)
+        self.sequence = tk.Label(self, text="大不推", height=1, width=5, fg='red', bg='white', font=f2)
         # 輸入
         self.teacher = tk.Entry(self, textvariable=tk.StringVar(), bg='pink', font=f3)  # 老師的
         self.teacher.place(x=200, y=135)  # 位置
@@ -89,7 +90,7 @@ class Action(tk.Frame):
         self.arrange.current(0)
 
     def click(self):  # 點擊程序
-        f2 = tkFont.Font(size=25, family="Courier New")
+        self.sequence['text'] = ''
         t_grade = 0
         self.output['state'] = 'normal'
         self.output.delete(1.0, "end")  # 清空所有文字
@@ -130,22 +131,27 @@ class Action(tk.Frame):
             else:
                 self.output.insert(1.0, '課程分析: 不推', "tag_1")
             self.output.insert(1.0, '完成', "tag_1")
-            self.output.insert('end', "=======================我是分隔線======================", 'tag_1')
+            self.output.insert('end', "======================我是分隔線=====================", 'tag_1')
             self.output['state'] = 'disable'
             print(grade)
 
             t_grade += grade
             # t_grade平均
             if t_grade < 0.2:
-                self.sequence = tk.Label(self, text="大不推", height=1, width=5, fg='red', bg='white', font=f2).place(x=700, y=25)  # 結果
+                self.sequence['text'] = "大不推"
+                self.sequence.place(x=700, y=25)  # 結果
             elif t_grade < 0.4:
-                self.sequence = tk.Label(self, text="不推", height=1, width=5, fg='red', bg='white', font=f2).place(x=700, y=25)
+                self.sequence['text'] = "不推"
+                self.sequence.place(x=700, y=25)            
             elif t_grade < 0.6:
-                self.sequence = tk.Label(self, text="普通", height=1, width=5, fg='red', bg='white', font=f2).place(x=700, y=25)
+                self.sequence['text'] = "普通"
+                self.sequence.place(x=700, y=25)            
             elif t_grade < 0.8:
-                self.sequence = tk.Label(self, text="推", height=1, width=5, fg='red', bg='white', font=f2).place(x=700, y=25)
+                self.sequence['text'] = "推"
+                self.sequence.place(x=700, y=25)            
             else:
-                self.sequence = tk.Label(self, text="大推", height=1, width=5, fg='red', bg='white', font=f2).place(x=700, y=25)
+                self.sequence['text'] = "大推"
+                self.sequence.place(x=700, y=25)
 
 
 if __name__ == "__main__":
