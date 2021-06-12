@@ -6,11 +6,13 @@ import bs4
 #設定字典
 PTTCOURSE_dct={}
 PTTCOURSE_alldct={}
+#list設定
+article_href = []
 # 文章連結
 PTT_URL = "https://www.ptt.cc/bbs/NTUcourse/search?page="
 PTT_URL2="&q=[評價]"
 #PTT_test="https://www.ptt.cc/bbs/NTUcourse/search?q=%5B%E8%A9%95%E5%83%B9%5D"
-pages=284 #input()
+pages=2 #input()
 for i in range(pages):
     m=i+1
     PTTCOURSE_URL=PTT_URL+str(m)+PTT_URL2
@@ -25,7 +27,6 @@ for i in range(pages):
     results = soup.select("div.title")
     # print(results)
     # 取得各篇文章網址
-    article_href = []
     for item in results:
 
         try:
@@ -37,8 +38,6 @@ for i in range(pages):
         except:
 
             continue;
-
-#print(article_href)
 for pcontent in range(len(article_href)):
     URL = "https://www.ptt.cc"+article_href[pcontent]
     #print(URL)
@@ -57,7 +56,7 @@ for pcontent in range(len(article_href)):
     # 標題
     title = header[2].text
     # 日期
-    date =  header[3].text
+    #date =  header[3].text
     #內文資料
     main_container = soup.find(id='main-container')
     content=main_container.find_all("span")
