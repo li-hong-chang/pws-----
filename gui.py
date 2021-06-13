@@ -202,6 +202,8 @@ class Action(tk.Frame):
                 t = alldct_list[j]
                 nn = list(t.keys())
                 for i in range(0, len(nn)):
+                    if t[nn[i]] == '':
+                        continue
                     if nn[i] != '留言':
                         s = SnowNLP(u'' + t[nn[i]])
                         txt.append(s)
