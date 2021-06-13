@@ -26,9 +26,13 @@ class Action(tk.Frame):
         f4 = tkFont.Font(size=16, family="Courier New")
         # 白色背景
         self.background = tk.Canvas(self, height=600, width=1300, bg='white').pack()
+        # 滾輪
+        self.scrollbar = tk.Scrollbar(self)
+        self.scrollbar.place(x=600, y=75)
         # 輸出文字
-        self.output = tk.Text(self, width=52, height=22, font=f4, bg='#4DFFFF')
+        self.output = tk.Text(self, width=52, height=22, font=f4, bg='#4DFFFF', yscrollcommand=self.scrollbar.set)
         self.output.place(x=600, y=75)
+        self.scrollbar.config(command=self.output.yview)
         # 按鈕
         self.start = tk.Button(self, text="開始", height=1, width=4, bg='#ffcc00', font=f3, command=self.click).place(x=250, y=400)
         self.intro = tk.Button(self, text="1.輸入完整教師、課程名稱\n2.選擇資料數量和排序方式\n3.點擊開始\n4.總共有5種結果", width=40, bg='orange', font=f4, state='disable').place(x=32, y=20)
@@ -218,9 +222,9 @@ class Action(tk.Frame):
                 grade = pt/num
 
                 if grade > 0.5:
-                    self.output.insert(1.0, '文章分析: 推', "tag_1")
+                    self.output.insert(1.0, '文章分析: 推\n', "tag_1")
                 else:
-                    self.output.insert(1.0, '文章分析: 不推', "tag_1")
+                    self.output.insert(1.0, '文章分析: 不推\n', "tag_1")
                 for i in range(0, len(nn)):
                     self.output.insert('end', nn[i] + '\n', "tag_2")
                     if nn[i] != '留言':
@@ -234,7 +238,10 @@ class Action(tk.Frame):
                 # t_grade平均
 
             self.output['state'] = 'disable'
-            if t_grade < 0.2:
+            if lim == 0:
+                self.sequence['text'] = "沒課程"
+                self.sequence.place(x=700, y=25)
+            elif t_grade < 0.2:
                 self.sequence['text'] = "大不推"
                 self.sequence.place(x=700, y=25)  # 結果
             elif t_grade < 0.4:
