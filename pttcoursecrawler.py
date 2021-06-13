@@ -42,31 +42,7 @@ for i in range(5):
         except:
 
             continue;
-for i in range(5):
-    m=i+1
-    PTTCOURSE_URL=PTT_URL+str(m)+PTT_URL2+course_teacher
-    #print(PTTCOURSE_URL)
-    # 設定Header與Cookie
-    my_headers = {'cookie': 'over18=1;'}
-    # 發送get 請求 到 ptt course版
-    response = requests.get(PTTCOURSE_URL, headers=my_headers)
-    # 標題
-    soup = BeautifulSoup(response.text, "html.parser")
 
-    results = soup.select("div.title")
-    # print(results)
-    # 取得各篇文章網址
-    for item in results:
-
-        try:
-
-            item_href = item.select_one("a").get("href")
-
-            article_href.append(item_href)
-
-        except:
-
-            continue;
 for pcontent in range(len(article_href)):
     #清空檔案
     PTTCOURSE_dct={}
@@ -159,5 +135,4 @@ for pcontent in range(len(article_href)):
     PTTCOURSE_dct["文章網址"]=URL
     #print(PTTCOURSE_dct)
     PTTCOURSE_alldct[title]=PTTCOURSE_dct
-print(PTTCOURSE_alldct)
-print(PTTCOURSE_alldct.keys())
+print(list(PTTCOURSE_alldct.values())t)
