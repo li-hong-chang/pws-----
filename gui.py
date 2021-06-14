@@ -186,7 +186,7 @@ class Action(tk.Frame):
 
             lim = min(int(self.num.get()), len(alldct_list))
             if lim != int(self.num.get()):
-                self.output.insert(1.0, '課程數量不足' + self.num.get(), "tag_1")
+                self.output.insert(1.0, '課程數量不足' + self.num.get() + '\n', "tag_1")
             for j in range(0, lim):
                 t = alldct_list[j]
                 nn = list(t.keys())
