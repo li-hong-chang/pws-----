@@ -6,6 +6,7 @@ import time
 from bs4 import BeautifulSoup
 import requests
 import os
+from tkinter.scrolledtext import ScrolledText
 
 
 class Action(tk.Frame):
@@ -26,13 +27,9 @@ class Action(tk.Frame):
         f4 = tkFont.Font(size=16, family="Courier New")
         # 白色背景
         self.background = tk.Canvas(self, height=600, width=1300, bg='white').pack()
-        # 滾輪
-        self.scrollbar = tk.Scrollbar(self)
-        self.scrollbar.place(x=600, y=75)
         # 輸出文字
-        self.output = tk.Text(self, width=52, height=22, font=f4, bg='#4DFFFF', yscrollcommand=self.scrollbar.set)
+        self.output = ScrolledText(self, width=52, height=22, font=f4, bg='#4DFFFF')
         self.output.place(x=600, y=75)
-        self.scrollbar.config(command=self.output.yview)
         # 按鈕
         self.start = tk.Button(self, text="開始", height=1, width=4, bg='#ffcc00', font=f3, command=self.click).place(
             x=250, y=400)
@@ -71,7 +68,6 @@ class Action(tk.Frame):
             self.output.insert(1.0, '請輸入課堂名稱', "tag_1")
         else:
             txt = []
-
             teacher = self.teacher.get().strip()
             course = self.course.get().strip()
             order = self.arrange.get()
@@ -85,12 +81,9 @@ class Action(tk.Frame):
             PTT_URL2 = "&q="
             teacher_course = teacher + " " + course
             course_teacher = course + " " + teacher
-            # PTT_test="https://www.ptt.cc/bbs/NTUcourse/search?q=%5B%E8%A9%95%E5%83%B9%5D"
-            # pages=int(input())#有284頁
             for i in range(5):
                 m = i + 1
                 PTTCOURSE_URL = PTT_URL + str(m) + PTT_URL2 + teacher_course
-                # print(PTTCOURSE_URL)
                 # 設定Header與Cookie
                 my_headers = {'cookie': 'over18=1;'}
                 # 發送get 請求 到 ptt course版
@@ -98,7 +91,6 @@ class Action(tk.Frame):
                 # 標題
                 soup = BeautifulSoup(response.text, "html.parser")
                 results = soup.select("div.title")
-                # print(results)
                 # 取得各篇文章網址
                 for item in results:
                     try:
@@ -124,9 +116,6 @@ class Action(tk.Frame):
                 board = header[1].text
                 # 標題
                 title = header[2].text
-                # print(title)
-                # 日期
-                # date =  header[3].text
                 # 內文資料
                 main_container = soup.find(id='main-container')
                 content = main_container.find_all("span")
@@ -174,34 +163,23 @@ class Action(tk.Frame):
                 PTTCOURSE_dct["ω 其它(是否注重出席率？如果為外系選修，需先有什麼基礎較好嗎？老師個性？ 加簽習慣？嚴禁遲到等…)"] = con[j:k].replace(
                     "ω 其它(是否注重出席率？如果為外系選修，需先有什麼基礎較好嗎？老師個性？ 加簽習慣？嚴禁遲到等…)", "")
                 PTTCOURSE_dct["Ψ 總結"] = con[k:l].replace("Ψ 總結", "")
-                # print(con[k:l])
-                # print(PTTCOURSE_dct)
                 comentment = []
                 num = 0
                 for tag in soup.select('div.push'):
                     num += 1
                     push_tag = tag.find("span", {'class': 'push-tag'}).text
-                    # print "push_tag:",push_tag
                     push_userid = tag.find("span", {'class': 'push-userid'}).text
-                    # print "push_userid:",push_userid
                     push_content = tag.find("span", {'class': 'push-content'}).text.replace("\n", "")
                     push_content = push_content[1:]
-                    # print "push_content:",push_content
                     time = tag.find("span", {'class': 'push-ipdatetime'}).text
                     message = str(push_tag) + str(push_userid) + ":" + str(push_content) + "     " + str(time)
-                    # print(message)
                     comentment.append(message)
-                # print(URLlist)
-                # print(main_container)
-                # print(comentment)
                 # 將資料儲存進字典
                 PTTCOURSE_dct["留言"] = comentment
                 PTTCOURSE_dct["文章網址"] = URL
-                # print(PTTCOURSE_dct)
                 PTTCOURSE_alldct[title] = PTTCOURSE_dct
 
             alldct_list = list(PTTCOURSE_alldct.values())
-
             #若以留言數排序
             if order == "留言數":
                alldct_list = sorted(alldct_list,key=lambda x:len(x["留言"]),reverse=True)
@@ -234,38 +212,37 @@ class Action(tk.Frame):
                 w.close()
                 grade = pt / num
 
-                if grade > 0.5:
-                    self.output.insert(1.0, '文章分析: 推\n', "tag_1")
+                if grade >= 0.5:
+                    self.output.insert('end', '文章分析: 推\n', "tag_1")
                 else:
-                    self.output.insert(1.0, '文章分析: 不推\n', "tag_1")
+                    self.output.insert('end', '文章分析: 不推\n', "tag_1")
                 for i in range(0, len(nn)):
                     self.output.insert('end', nn[i] + '\n', "tag_2")
                     if nn[i] != '留言':
                         self.output.insert('end', t[nn[i]].strip().replace('\n\n', '\n') + '\n')  # 內文從頭插入
                     else:
                         self.output.insert('end', (''.join(t[nn[i]])) + '\n')  # 內文從頭插入
-                self.output.insert(1.0, '完成', "tag_1")
                 self.output.insert('end', "======================我是分隔線=====================", 'tag_1')
-                print(grade)
                 t_grade += grade
                 # t_grade平均
 
+            self.output.insert(1.0, '完成\n', "tag_1")
             self.output['state'] = 'disable'
             if lim == 0:
                 self.sequence['text'] = "沒課程"
                 self.sequence.place(x=700, y=25)
-            elif t_grade < 0.2:
+            elif t_grade/lim < 0.2:
                 self.sequence['text'] = "大不推"
                 self.sequence.place(x=700, y=25)  # 結果
-            elif t_grade < 0.4:
+            elif t_grade/lim < 0.4:
                 self.sequence['text'] = "不推"
-                self.sequence.place(x=700, y=25)
-            elif t_grade < 0.6:
+                self.sequence.place(x=700, y=25)                
+            elif t_grade/lim < 0.6:
                 self.sequence['text'] = "普通"
-                self.sequence.place(x=700, y=25)
-            elif t_grade < 0.8:
+                self.sequence.place(x=700, y=25)                
+            elif t_grade/lim < 0.8:
                 self.sequence['text'] = "推"
-                self.sequence.place(x=700, y=25)
+                self.sequence.place(x=700, y=25)                
             else:
                 self.sequence['text'] = "大推"
                 self.sequence.place(x=700, y=25)
