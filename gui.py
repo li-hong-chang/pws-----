@@ -76,6 +76,7 @@ class Action(tk.Frame):
             PTTCOURSE_alldct = {}
             # list設定
             article_href = []
+            article_all=[]
             # 文章連結
             PTT_URL = "https://www.ptt.cc/bbs/NTUcourse/search?page="
             PTT_URL2 = "&q="
@@ -95,7 +96,14 @@ class Action(tk.Frame):
                 for item in results:
                     try:
                         item_href = item.select_one("a").get("href")
-                        article_href.append(item_href)
+                        article_title=item.getText()
+                        #清除資料
+                        if article_title.find("[評價]") != -1:
+                            article_href.append(item_href)
+                            article_all.append(article_title)
+                        elif article_title.find("[通識]") != -1:
+                            article_href.append(item_href)
+                            article_all.append(article_title)
                     except:
                         continue
 
@@ -229,7 +237,7 @@ class Action(tk.Frame):
             self.output.insert(1.0, '完成\n', "tag_1")
             self.output['state'] = 'disable'
             if lim == 0:
-                self.sequence['text'] = "沒課程"
+                self.sequence['text'] = "無資料"
                 self.sequence.place(x=700, y=25)
             elif t_grade/lim < 0.2:
                 self.sequence['text'] = "大不推"
