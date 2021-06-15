@@ -10,6 +10,7 @@ PTTCOURSE_dct={}
 PTTCOURSE_alldct={}
 #list設定
 article_href = []
+article_all=[]
 # 文章連結
 PTT_URL = "https://www.ptt.cc/bbs/NTUcourse/search?page="
 PTT_URL2="&q="
@@ -36,12 +37,20 @@ for i in range(5):
         try:
 
             item_href = item.select_one("a").get("href")
-
-            article_href.append(item_href)
+            article_title=item.getText()
+            #清除資料
+            if article_title.find("[評價]") != -1:
+                article_href.append(item_href)
+                article_all.append(article_title)
+            if article_title.find("[通識]") != -1:
+                article_href.append(item_href)
+                article_all.append(article_title)
 
         except:
 
             continue;
+#print(article_href)
+#print(article_all)
 
 for pcontent in range(len(article_href)):
     #清空檔案
@@ -135,4 +144,4 @@ for pcontent in range(len(article_href)):
     PTTCOURSE_dct["文章網址"]=URL
     #print(PTTCOURSE_dct)
     PTTCOURSE_alldct[title]=PTTCOURSE_dct
-print(list(PTTCOURSE_alldct.values())t)
+print(list(PTTCOURSE_alldct.values()))
